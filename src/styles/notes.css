@@ -1,0 +1,23 @@
+.question {
+    font-size: 20px;
+}
+
+#qr-code {
+    max-height: 130px;
+    width: auto;
+}
+
+#notes {
+    width: 40vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    text-shadow: 1px 1px 2px #000;
+}
+
+#qr-code {
+    max-width: 200px;
+    height: auto;
+}

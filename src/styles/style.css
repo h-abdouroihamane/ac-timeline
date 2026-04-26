@@ -1,0 +1,53 @@
+html {
+    font-family: 'Avenir Next World Demi', sans-serif;
+    color: #fff;
+}
+
+body {
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+#background-image {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 0.4s ease-in-out;
+}
+
+#background-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45); /* tweak between 0.3 and 0.6 */
+    pointer-events: none;
+}
+
+.v-application,
+.v-application__wrap,
+.v-main,
+.v-layout {
+    background: transparent !important;
+}
+
+#container {
+    /* background-color: rgba(1, 1, 1, 0.45); */
+    text-shadow: 2px 2px 2px #000;
+    text-align: center;
+}
+
+p {
+    margin: 10px 10px 10px 0;
+}
+
+.grid {
+    display: grid;
+    justify-content: start;
+    align-items: start;
+    grid-template-columns: 55vw 45vw;
+    text-align: left;
+}
