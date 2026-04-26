@@ -36,3 +36,10 @@
 Open a new branch and pull request for **new features** and **refactors**.
 Smaller changes (bug fixes, typos, config tweaks, dependency bumps) can be
 committed directly to the working branch without a dedicated PR.
+
+## PR authorization
+
+Standing authorization to open PRs without asking each time. Still:
+- Use a descriptive branch name and PR title.
+- Don't auto-merge; leave the PR open for human review.
+- Don't push to `main` directly.
