@@ -44,10 +44,3 @@ p {
     margin: 10px 10px 10px 0;
 }
 
-.grid {
-    display: grid;
-    justify-content: start;
-    align-items: start;
-    grid-template-columns: 55vw 45vw;
-    text-align: left;
-}

@@ -16,7 +16,7 @@
         </v-app-bar>
 
         <v-main>
-            <v-container id="container">
+            <v-container id="container" fluid>
                 <h1
                     id="title"
                     class="pb-2 pt-4 text-3xl font-bold tracking-tight text-heading md:text-3xl lg:text-3xl"
@@ -33,8 +33,12 @@
                     by alsagone
                 </h4>
 
-                <div class="grid">
-                    <ArcTable />
+                <div
+                    class="flex flex-col items-start justify-center gap-8 text-left lg:flex-row"
+                >
+                    <div class="overflow-x-auto">
+                        <ArcTable />
+                    </div>
                     <Notes />
                 </div>
             </v-container>
