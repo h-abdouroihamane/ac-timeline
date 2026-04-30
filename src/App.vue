@@ -3,6 +3,8 @@
         <DynamicBackground :name="currentBg" :dim="dim" />
         <v-app-bar density="compact" flat>
             <v-spacer />
+            <ScreenshotButton :target="gridEl" class="mr-3" />
+            <CopyAltText class="mr-3" />
             <v-select
                 v-model="currentBg"
                 :items="backgroundList"
@@ -33,7 +35,7 @@
                     by alsagone
                 </h4>
 
-                <div class="grid">
+                <div ref="gridEl" class="grid">
                     <ArcTable />
                     <Notes />
                 </div>
@@ -44,12 +46,15 @@
 
 <script lang="ts" setup>
 import ArcTable from './components/ArcTable.vue';
+import CopyAltText from './components/CopyAltText.vue';
 import DynamicBackground from './components/DynamicBackground.vue';
 import Notes from './components/Notes.vue';
+import ScreenshotButton from './components/ScreenshotButton.vue';
 import { ref } from 'vue';
 const currentBg = ref('helix');
 const backgroundList = ['helix', 'obsidian', 'obsidian_3D', 'ocean', 'rust'];
 const dim = 0.4;
+const gridEl = ref<HTMLElement | null>(null);
 </script>
 
 <style>
