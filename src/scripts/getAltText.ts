@@ -28,6 +28,28 @@ const stripHtml = (html: string): string =>
         .replace(/\s+/g, ' ')
         .trim();
 
+const ROMAN_TO_ARABIC: Record<string, string> = {
+    I: '1',
+    II: '2',
+    III: '3',
+    IV: '4',
+    V: '5',
+    VI: '6',
+    VII: '7',
+    VIII: '8',
+    IX: '9',
+    X: '10',
+};
+
+// Scoped to "Creed <roman>" so the standalone English pronoun "I" is left
+// alone. Numerals are listed longest-first so the alternation matches
+// "VIII" before "V", etc.
+const romanNumeralsToArabic = (text: string): string =>
+    text.replace(
+        /\bCreed\s+(VIII|VII|VI|IX|IV|III|II|I|X|V)\b/g,
+        (_, roman: string) => `Creed ${ROMAN_TO_ARABIC[roman]}`,
+    );
+
 /**
  * Joins a list of strings in natural English:
  *   ['a']           -> 'a'
@@ -72,5 +94,5 @@ export const getAltText = (): string => {
     // protocol ("h t t p s colon slash slash") before the actual link.
     lines.push('Link to the lore guide at tiny.cc/GuideAC.');
 
-    return lines.join('\n');
+    return romanNumeralsToArabic(lines.join('\n'));
 };

@@ -1,7 +1,7 @@
 <template>
     <div id="notes">
         <h2
-            class="pb-4 pt-4 text-2xl font-bold tracking-tight text-heading md:text-2xl lg:text-2xl"
+            class="pb-4 pt-4 text-3xl font-bold tracking-tight text-heading md:text-3xl lg:text-3xl"
         >
             Notes
         </h2>

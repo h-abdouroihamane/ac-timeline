@@ -1,5 +1,11 @@
 .question {
-    font-size: 20px;
+    font-size: 26px;
+    line-height: 1.3;
+}
+
+.answer {
+    font-size: 18px;
+    line-height: 1.5;
 }
 
 #qr-code {
@@ -8,9 +14,8 @@
 }
 
 #notes {
-    width: 40vw;
-    height: 100vh;
-    display: flex;
+    width: 100%;
+    max-width: 55rem;
     flex-direction: column;
     justify-content: start;
     align-items: center;
