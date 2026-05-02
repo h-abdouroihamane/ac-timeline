@@ -9,7 +9,7 @@ export const noteList: Note[] = [
         ],
     },
     {
-        question: `Why is Black Flag listed <span class="line-through decoration-1">twice</span> <span class="italic">three</span> times?`,
+        question: `Why is Black Flag listed <span class="line-through decoration-3">twice</span> <span class="italic">three</span> times?`,
         answers: [
             "Without getting into too much detail, the questions left open in Assassin's Creed III are answered by a single cutscene in Black Flag - so technically, you could play Black Flag without knowing anything about the previous narrative arc.",
             "As for the Resynced version, the devs said they decided to replace the Modern Day plot from the original game to link the story to what happens in Shadows' Modern Day.",

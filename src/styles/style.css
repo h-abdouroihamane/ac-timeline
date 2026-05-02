@@ -19,11 +19,9 @@ body {
     transition: background-image 0.4s ease-in-out;
 }
 
-#background-image::after {
-    content: '';
+#background-image .overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.45); /* tweak between 0.3 and 0.6 */
     pointer-events: none;
 }
 
@@ -46,8 +44,9 @@ p {
 
 .grid {
     display: grid;
-    justify-content: start;
+    grid-template-columns: 1fr 1fr;
     align-items: start;
-    grid-template-columns: 55vw 45vw;
+    justify-items: center;
+    gap: 1.5rem;
     text-align: left;
 }
