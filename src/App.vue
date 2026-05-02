@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app :style="{ '--page-bg': `url(${bgUrl})`, '--page-dim': dim }">
         <DynamicBackground :name="currentBg" :dim="dim" />
 
         <v-btn
@@ -69,7 +69,7 @@
 <script lang="ts" setup>
 import CopyAltText from './components/CopyAltText.vue';
 import DynamicBackground from './components/DynamicBackground.vue';
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 
 const DIM_DEFAULTS: Record<string, number> = {
     ocean: 0.5,
@@ -81,6 +81,11 @@ const DIM_DEFAULTS: Record<string, number> = {
 
 const backgroundList = ['helix', 'obsidian', 'obsidian_3D', 'ocean', 'rust'];
 const currentBg = ref('helix');
+const bgUrl = computed(
+    () =>
+        new URL(`./assets/backgrounds/${currentBg.value}.jpg`, import.meta.url)
+            .href,
+);
 const dim = ref(DIM_DEFAULTS[currentBg.value] ?? 0.3);
 const settingsOpen = ref(false);
 const settingsButtonVisible = ref(true);

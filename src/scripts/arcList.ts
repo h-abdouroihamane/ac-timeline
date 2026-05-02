@@ -93,16 +93,8 @@ export const arcList: Arc[] = [
                 picture: 'ac-liberation',
             },
             {
-                name: "Assassin's Creed Chronicles China",
-                picture: 'ac-c-china',
-            },
-            {
-                name: "Assassin's Creed Chronicles India",
-                picture: 'ac-c-india',
-            },
-            {
-                name: "Assassin's Creed Chronicles Russia",
-                picture: 'ac-c-russia',
+                name: "Assassin's Creed Chronicles",
+                picture: 'ac-chronicles',
             },
         ],
     },

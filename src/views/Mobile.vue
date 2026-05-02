@@ -1,117 +1,110 @@
 <template>
-    <div class="mobile-view">
-        <v-tabs
-            v-model="activeTab"
-            align-tabs="center"
-            color="white"
-            grow
-            density="compact"
-        >
-            <v-tab value="table">Table</v-tab>
-            <v-tab value="notes">Notes</v-tab>
-        </v-tabs>
-
-        <v-tabs-window v-model="activeTab" class="mt-3">
-            <v-tabs-window-item value="table">
-                <v-carousel
-                    hide-delimiter-background
-                    show-arrows="hover"
-                    color="white"
-                    height="auto"
-                    progress="primary"
-                >
-                    <v-carousel-item
-                        v-for="(arc, i) in arcList"
-                        :key="i"
-                        class="arc-slide"
-                    >
-                        <div class="arc-card">
-                            <h2 class="arc-name">{{ arc.name }}</h2>
+    <div ref="mobileView" class="mobile-view">
+        <div class="carousel-wrap">
+            <v-carousel
+                hide-delimiters
+                show-arrows="hover"
+                color="white"
+                :height="carouselSize"
+                progress="primary"
+            >
+                <v-carousel-item v-for="(arc, i) in arcList" :key="i">
+                    <div class="arc-card">
+                        <h2 class="arc-name">{{ arc.name }}</h2>
+                        <div
+                            class="games-grid"
+                            :class="arc.games.length >= 5 ? 'cols-3' : 'cols-2'"
+                        >
                             <div
-                                class="games-grid"
-                                :class="
-                                    arc.games.length >= 5 ? 'cols-3' : 'cols-2'
-                                "
+                                v-for="(g, idx) in arc.games"
+                                :key="idx"
+                                class="cover"
                             >
-                                <img
-                                    v-for="(g, idx) in arc.games"
-                                    :key="idx"
-                                    :src="getPicture(g)"
-                                    :alt="g.name"
-                                />
+                                <img :src="getPicture(g)" :alt="g.name" />
+                                <span
+                                    v-if="arc.name !== 'Spin-offs'"
+                                    class="cover-num"
+                                    >{{ idx + 1 }}</span
+                                >
                             </div>
                         </div>
-                    </v-carousel-item>
-                </v-carousel>
-            </v-tabs-window-item>
+                    </div>
+                </v-carousel-item>
+                <v-carousel-item v-for="(group, i) in noteSlides" :key="i">
+                    <div class="note-card">
+                        <ul v-for="(note, j) in group" :key="j" class="note">
+                            <li class="question" v-html="note.question"></li>
+                            <ul class="answers">
+                                <li
+                                    v-for="(a, k) in note.answers"
+                                    :key="k"
+                                    class="answer"
+                                    v-html="a"
+                                ></li>
+                            </ul>
+                        </ul>
+                    </div>
+                </v-carousel-item>
 
-            <v-tabs-window-item value="notes">
-                <Notes />
-            </v-tabs-window-item>
-        </v-tabs-window>
+                <v-carousel-item>
+                    <div class="note-card guide-card">
+                        <QrCode />
+                        <p class="guide-text">
+                            Link to the Lore guide -
+                            <a
+                                href="https://tiny.cc/GuideAC"
+                                target="_blank"
+                                rel="noreferrer noopener"
+                                class="text-orange-200 underline hover:no-underline"
+                                >https://tiny.cc/GuideAC</a
+                            >
+                        </p>
+                    </div>
+                </v-carousel-item>
+            </v-carousel>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import Notes from '@/components/Notes.vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
+import QrCode from '@/components/QrCode.vue';
 import { arcList } from '@/scripts/arcList';
 import { getPicture } from '@/scripts/game';
+import { noteList } from '@/scripts/noteList';
+import type { Note } from '@/scripts/note';
 
-const activeTab = ref<'table' | 'notes'>('table');
+const NOTES_PER_SLIDE = 2;
+const noteSlides = computed<Note[][]>(() => {
+    const slides: Note[][] = [];
+    for (let i = 0; i < noteList.length; i += NOTES_PER_SLIDE) {
+        slides.push(noteList.slice(i, i + NOTES_PER_SLIDE));
+    }
+    return slides;
+});
+
+const mobileView = ref<HTMLElement | null>(null);
+const carouselSize = ref(360);
+
+let resizeObserver: ResizeObserver | null = null;
+
+const updateSize = () => {
+    if (mobileView.value) {
+        carouselSize.value = mobileView.value.clientWidth;
+    }
+};
+
+onMounted(() => {
+    updateSize();
+    if (mobileView.value && 'ResizeObserver' in window) {
+        resizeObserver = new ResizeObserver(updateSize);
+        resizeObserver.observe(mobileView.value);
+    }
+});
+
+onUnmounted(() => {
+    resizeObserver?.disconnect();
+});
 </script>
 
-<style scoped>
-.mobile-view {
-    width: 100%;
-    max-width: 420px;
-    margin: 0 auto;
-}
-
-.arc-slide {
-    aspect-ratio: 1 / 1;
-}
-
-.arc-card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.75rem;
-    box-sizing: border-box;
-    text-shadow: 1px 1px 2px #000;
-}
-
-.arc-name {
-    margin: 0;
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: 700;
-    line-height: 1.2;
-}
-
-.games-grid {
-    flex: 1;
-    display: grid;
-    gap: 0.5rem;
-    place-items: center;
-    min-height: 0;
-}
-
-.games-grid.cols-2 {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.games-grid.cols-3 {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.games-grid img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    box-shadow:
-        rgba(50, 50, 93, 0.25) 0 6px 12px -2px,
-        rgba(0, 0, 0, 0.3) 0 3px 7px -3px;
-}
-</style>
+<style scoped src="@/styles/mobile.css"></style>
